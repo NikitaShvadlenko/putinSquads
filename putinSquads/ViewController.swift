@@ -11,6 +11,7 @@ import CoreLocation
 class ViewController: UIViewController {
     //Почему тут нужен force unwrapping?(я заметил, что без него не работает) Почему нельзя сразу ставить "=", а нужно именно двоеточие? Как правильно это называть?
     //Декларирую SquareView вверху, чтобы мог добавить Label в него
+    ///hihih
     private var squareView: UIView!
     private var putinSquadUnit = ["Омон", "Налоговая", "Автозак", "Эффективный Менеджер", "Артисты Эстрады"]
     private var putinTableView: UITableView!
