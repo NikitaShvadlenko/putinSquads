@@ -110,7 +110,8 @@ extension ViewController {
 extension ViewController: UITableViewDataSource {
     //Сколько мне нужно рядов для моих клеток?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        putinSquadUnit[section]
+        //SECTION.COUNT
+        putinSquadUnit[]
     }
     //Какие клетки я буду вставлять в эти ряды? В конце функции я обязан выдать (объект?) формата UITableViewCell.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
