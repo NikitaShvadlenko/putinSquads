@@ -13,7 +13,13 @@ class ViewController: UIViewController {
     //Декларирую SquareView вверху, чтобы мог добавить Label в него
     ///hihih
     private var squareView: UIView!
-    private var putinSquadUnit = ["Омон", "Налоговая", "Автозак", "Эффективный Менеджер", "Артисты Эстрады"]
+    
+    private var putinSquadUnit = [
+        SectionItem.init(title: "Власть", rows: [Rowitem.init(title: "Омон", imageName: "hammer"), Rowitem.init(title: "Автозак", imageName: "car")]),
+        SectionItem.init(title: "Деньги", rows: [Rowitem.init(title: "Налоговая", imageName: "pencil"), Rowitem.init(title: "Эффективный Менеджер", imageName: "clock")]),
+        SectionItem.init(title: "Пропаганда", rows: [Rowitem.init(title: "Артисты Эстрады", imageName: "star")])
+    ]
+    private var headerName = ""
     private var putinTableView: UITableView!
     private var button: UIButton!
     private var locationManager: CLLocationManager?
@@ -104,23 +110,27 @@ extension ViewController {
 extension ViewController: UITableViewDataSource {
     //Сколько мне нужно рядов для моих клеток?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        putinSquadUnit.count
+        putinSquadUnit[section]
     }
     //Какие клетки я буду вставлять в эти ряды? В конце функции я обязан выдать (объект?) формата UITableViewCell.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         //Когда используешь dequeReusableCell, а эта клетка является классом(который ты зарегистрировал выше в TableView), то функция deque обращается к функции Init класса клетки. Поэтому важно делать override init и там вызывать все методы, которые есть. Почему Init в классе выглядит именно так, как он выглядит, я все еще не понимаю.
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PutinSquadCellIdentifier", for: indexPath) as? PutinSquadCell
         
         // Создаю константу с тайтлом из массива для каждого отдельного ряда, ведь у меня есть функция configure в моей зарегистрированной клетке. А чтобы ее вызвать, мне как раз нужен тайтл. (можно и без константы это делать, но так код выглядит понятнее.)
-        let putinSquadUnitTitle = putinSquadUnit[indexPath.row]
-        
+        let putinSquadUnitTitle =
+        let picture =
         // Обращаюсь к публичной функции configure для установки правильного String в моем Label
-        cell?.configure(title: putinSquadUnitTitle)
-        
+        cell?.configure(title: putinSquadUnitTitle, picture: picture)
         //Возвращаю Unwrapped клетку, как того и требует функция протокола.
         return cell!
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        putinSquadUnit.count
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        putinSquadUnit
     }
 }
 //MARK: - SetupDestroyAllButton
@@ -158,7 +168,7 @@ extension ViewController: CLLocationManagerDelegate{
         //Он Будет сам себе указывать, что делать
         locationManager?.delegate = self
         //Попросит разрешения Взять Локацию
-        locationManager?.requestAlwaysAuthorization()
+        locationManager?.requestWhenInUseAuthorization()
         //Если Запрещена Локейшн - сразу нужен АЛЕРТ!
             if CLLocationManager.locationServicesEnabled(){
         print("This one works")

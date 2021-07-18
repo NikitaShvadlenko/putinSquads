@@ -8,7 +8,6 @@
 import UIKit
 
 class PutinSquadCell: UITableViewCell {
-    
     private let label = UILabel()
     private let image = UIImageView()
     
@@ -26,23 +25,22 @@ class PutinSquadCell: UITableViewCell {
 //MARK: - public methods
 
 extension PutinSquadCell{
-    func configure(title: String) {
+    func configure(title: String, picture: String) {
         label.text = title
+        image.image = UIImage(systemName: picture)
+        image.tintColor = .black
     }
 }
 
 //MARK: - private methods
 extension PutinSquadCell{
     private func setupViews() {
-        
         contentView.addSubview(image)
         contentView.addSubview(label)
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.1
-        
         label.lineBreakMode = .byClipping
         label.font = UIFont.boldSystemFont(ofSize: 30)
         
@@ -55,7 +53,6 @@ extension PutinSquadCell{
         
         NSLayoutConstraint.activate(labelConstraints)
         //Хочу добавить картинку слева от Label
-        image.backgroundColor = .black
         image.translatesAutoresizingMaskIntoConstraints = false
         
         let imageConstratints = [
