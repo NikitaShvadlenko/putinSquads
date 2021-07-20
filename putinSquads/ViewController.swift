@@ -111,7 +111,8 @@ extension ViewController: UITableViewDataSource {
     //Сколько мне нужно рядов для моих клеток?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //SECTION.COUNT
-        putinSquadUnit[]
+        putinSquadUnit[section].rows.count
+        
     }
     //Какие клетки я буду вставлять в эти ряды? В конце функции я обязан выдать (объект?) формата UITableViewCell.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,8 +121,13 @@ extension ViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PutinSquadCellIdentifier", for: indexPath) as? PutinSquadCell
         
         // Создаю константу с тайтлом из массива для каждого отдельного ряда, ведь у меня есть функция configure в моей зарегистрированной клетке. А чтобы ее вызвать, мне как раз нужен тайтл. (можно и без константы это делать, но так код выглядит понятнее.)
-        let putinSquadUnitTitle =
-        let picture =
+        // Получается - indexPath содержит в себе много пропертиз таблицы - нужно тапать в отдельную.
+        let currentRow = indexPath.row
+        let currentSection = indexPath.section
+        let rowItem = putinSquadUnit[currentSection].rows[currentRow]
+        
+        let putinSquadUnitTitle = rowItem.title
+        let picture = rowItem.imageName
         // Обращаюсь к публичной функции configure для установки правильного String в моем Label
         cell?.configure(title: putinSquadUnitTitle, picture: picture)
         //Возвращаю Unwrapped клетку, как того и требует функция протокола.
@@ -131,7 +137,7 @@ extension ViewController: UITableViewDataSource {
         putinSquadUnit.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        putinSquadUnit
+        putinSquadUnit[section].title
     }
 }
 //MARK: - SetupDestroyAllButton
